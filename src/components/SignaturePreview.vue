@@ -6,7 +6,7 @@
           <img :src="companyLogo" :style="{'max-width': '250px', 'height': logoHeight + 'px', 'width': 'auto', 'display': 'block', 'image-rendering': '-webkit-optimize-contrast'}" />
         </td>
         <td width="49">
-          <span :style="{'display': 'block', 'height': height + 'px', 'margin': 'auto 24px', 'background-color': '#d1dbe5'}"></span>
+          <span :style="{'display': 'block', 'width': '1px', 'height': height + 'px', 'margin': 'auto 24px', 'background-color': '#d1dbe5'}">&nbsp;</span>
         </td>
         <td>
           <h1 v-if="name" :style="{'font-family' : fontFamily, 'font-weight': 700, 'font-size': '16px', 'line-height': '19px', 'color': colorPrimary, 'margin': '0px 0px 4px 0px','padding': '0px', 'whitespace': 'nowrap'}">{{ name }}</h1>

@@ -17,7 +17,6 @@
               <SignatureForm 
                 :companies="companies" 
                 :form="form" 
-                :preview="$refs.preview"
                 :useCache="useCache"
               />
               <SignatureIntegrations />

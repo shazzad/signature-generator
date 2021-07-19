@@ -58,7 +58,6 @@ export default {
   props: [
     'companies', 
     'form',
-    'preview',
     'useCache'
   ],
   data() {
@@ -84,7 +83,7 @@ export default {
       }
     },
     copySignature: function() {
-      let element = this.$refs.preview;
+      let element = this.$parent.$refs.preview;
 
       if ( ! element ) {
         alert('Preview element not yet ready');
@@ -112,7 +111,7 @@ export default {
       setTimeout(() => { this.copiedSignature = false }, 2000)
     },
     copyHtml: function() {
-      let element = this.$refs.preview;
+      let element = this.$parent.$refs.preview;
 
       if ( ! element ) {
         alert('Preview element not yet ready');
