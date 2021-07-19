@@ -3,7 +3,7 @@ node_modules
 /dist
 /signature-generator
 /signature-generator.zip
-
+/backups
 
 # local env files
 .env.local

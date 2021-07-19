@@ -3,7 +3,7 @@
     <table :style="{ 'table-layout': 'fixed' }" cellspacing="0" cellpadding="0">
       <tr>
         <td :style="{'vertical-align': 'middle'}">
-          <img :src="companyLogo" :style="{'max-width': '250px', 'height': logoHeight + 'px', 'width': 'auto', 'display': 'block'}" />
+          <img :src="companyLogo" :style="{'max-width': '250px', 'height': logoHeight + 'px', 'width': 'auto', 'display': 'block', 'image-rendering': '-webkit-optimize-contrast'}" />
         </td>
         <td width="49">
           <span :style="{'display': 'block', 'height': height + 'px', 'margin': 'auto 24px', 'background-color': '#d1dbe5'}"></span>
@@ -45,6 +45,17 @@ export default {
       lineHeightSmall: '12px'
     }
   },
+  mounted() {
+    this.preloadCompanyLogos();
+  },
+  methods: {
+    preloadCompanyLogos() {
+      this.companies.forEach((com) => {
+        let image = new Image();
+        image.src = com.logo;
+      });
+    }
+  },
   computed: {
     company() {
       if (this.form.company) {
@@ -63,7 +74,7 @@ export default {
     },
     name() {
       if ( ! this.form.name.trim()) {
-        return 'Your Name';
+        return 'First Last';
       }
 
       return this.form.name.trim();
@@ -78,7 +89,7 @@ export default {
     office() {
       let office = this.form.office.trim();
       if (office === '+') {
-        return '+123-45678';
+        return '+1-888-888-888';
       }
 
       return office
@@ -86,7 +97,7 @@ export default {
     mobile() {
       let mobile = this.form.mobile.trim();
       if (mobile === '+') {
-        return '+123-45678';
+        return '+1-888-888-888';
       }
 
       return mobile
