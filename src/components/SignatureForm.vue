@@ -28,7 +28,7 @@
 
     <div class="field field-text">
       <div class="field-label">Office Number</div>
-      <div class="field-desc">Enter in the order of country code, area code, number. Use dashes between each section</div>
+      <div class="field-desc">Enter in the order of country code, area code, number. Use dashes between each section.</div>
       <div class="field-error" v-show="officeError" v-html="officeError"></div>
       <div class="field-control">
         <input type="text" autocomplete="tel" v-model="form.office" v-on:blur="officeBlured = true;" />
@@ -37,7 +37,7 @@
 
     <div class="field field-text">
       <div class="field-label">Mobile Number</div>
-      <div class="field-desc">Enter in the order of country code, area code, number. Use dashes between each section</div>
+      <div class="field-desc">Enter in the order of country code, area code, number. Use dashes between each section.</div>
       <div class="field-error" v-show="mobileError" v-html="mobileError"></div>
       <div class="field-control">
         <input type="text" autocomplete="tel" v-model="form.mobile" v-on:blur="mobileBlured = true;" />
@@ -97,6 +97,8 @@ export default {
         document.execCommand('copy');
 
       } else if (window.getSelection) {
+        // let tWidth = element.$el.children[0].clientWidth;
+        // element.$el.children[0].style.width = (tWidth + 100) + 'px';
         let selection = window.getSelection();        
         let range = document.createRange();
         range.selectNodeContents(element.$el);
@@ -154,7 +156,7 @@ export default {
       return '';
     },
     jobTitleError() {
-      if ( ! this.jobTitleBlured  && ! this.officeBlured  && ! this.mobileBlured ) {
+      if ( ! this.jobTitleBlured && ! this.officeBlured  && ! this.mobileBlured ) {
         return '';
       }
 
@@ -167,7 +169,7 @@ export default {
     },
     officeError() {
       var value = this.form.office.trim();
-      if ( ! value || ! this.officeBlured  && ! this.mobileBlured ) {
+      if ( ! value || value === '+' || ( ! this.officeBlured  && ! this.mobileBlured ) ) {
         return '';
       }
 
@@ -180,7 +182,7 @@ export default {
     },
     mobileError() {
       var value = this.form.mobile.trim();
-      if ( ! value || ! this.mobileBlured ) {
+      if ( ! value || value === '+' || ! this.mobileBlured ) {
         return '';
       }
 
@@ -219,3 +221,98 @@ export default {
   }
 }
 </script>
+
+<style>
+/* Form */
+.form .field{
+    margin-bottom: 32px;
+}
+.form .field-submit{
+    margin-top: -4px;
+}
+.form .field-label{
+    color: #002848;
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: 500;
+}
+.form .field-desc,
+.form .field-error{
+    font-size: 10px;
+    line-height: 12px;
+    font-weight: 300;
+}
+.form .field-desc{
+    color: #002848;
+}
+.form .field-error {
+    color: red;
+}
+.form .field-label,
+.form .field-desc,
+.form .field-error{
+    margin-left: 4px;
+}
+.form .field-control{
+    margin-top: 4px;
+}
+.form .field-control select,
+.form .field-control input[type="text"],
+.form .field-control input[type="email"],
+.form .field-control input[type="url"],
+.form .field-control input[type="tel"]{
+    width: 100%;
+    height: 44px;
+    color: #002848;
+    line-height: 44px;
+    font-size: 18px;
+    padding: 0 15px;
+    font-weight: 300;
+    border-radius: 8px;
+    box-sizing: border-box;
+    background-color: #FFF;
+    border: 1px solid #CBD8EB;
+    font-family: 'Roboto', sans-serif;
+}
+@media(max-width: 479px) {
+    .form .field-control select,
+    .form .field-control input[type="text"],
+    .form .field-control input[type="email"],
+    .form .field-control input[type="url"],
+    .form .field-control input[type="tel"]{
+        height: 36px;
+        font-size: 14px;
+        line-height: 36px;
+    }
+}
+.form .field-control{
+    position: relative;
+}
+.form .field-control select {
+    -moz-appearance:none; /* Firefox */
+    -webkit-appearance:none; /* Safari and Chrome */
+    appearance:none;
+}
+.field-select .field-control::after{
+    top: 50%;
+    margin-top: -3.5px;
+    content: " ";
+    right: 20px;
+    width: 10px;
+    height: 7px;
+    display: block;
+    position: absolute;
+    background: url('../assets/dropdown.svg') no-repeat;
+}
+.form .field-submit button{
+    margin-right: 20px;
+}
+@media (max-width: 480px) {
+    .form .field-submit button{
+        width: 100%;
+        display: block;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+}
+</style>

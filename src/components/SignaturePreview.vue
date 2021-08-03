@@ -1,30 +1,47 @@
 <template>
-  <div class="box preview">
-    <table :style="{ 'table-layout': 'fixed' }" cellspacing="0" cellpadding="0">
+  <div class="preview">
+    <table cellspacing="0" cellpadding="0" border="0">
       <tr>
-        <td :style="{'vertical-align': 'middle'}">
-          <img :src="companyLogo" :style="{'max-width': '250px', 'height': logoHeight + 'px', 'width': 'auto', 'display': 'block', 'image-rendering': '-webkit-optimize-contrast'}" />
+        <td :width="logoWidth" :style="{'vertical-align': 'middle'}">
+          <img :src="logoUrl" :width="logoWidth" :height="logoHeight" :style="{'display': 'block', 'image-rendering': '-webkit-optimize-contrast'}" />
         </td>
         <td width="49">
-          <span :style="{'display': 'block', 'width': '1px', 'height': height + 'px', 'margin': 'auto 24px', 'background-color': '#d1dbe5'}">&nbsp;</span>
+          <table cellspacing="0" cellpadding="0" border="0" :style="{'margin':'1.5px 0px'}">
+            <tr>
+              <td width="24" :height="separatorHeight" :style="{'width': '24px'}">&nbsp;</td>
+              <td width="1" :height="separatorHeight" :style="{'border-left': '1px solid #d1dbe5'}"></td>
+              <td width="24" :height="separatorHeight" :style="{'width': '24px'}">&nbsp;</td>
+            </tr>
+          </table>
         </td>
         <td>
-          <h1 v-if="name" :style="{'font-family' : fontFamily, 'font-weight': 700, 'font-size': '16px', 'line-height': '19px', 'color': colorPrimary, 'margin': '0px 0px 4px 0px','padding': '0px', 'whitespace': 'nowrap'}">{{ name }}</h1>
-          <p v-if="jobTitle" :style="{'font-family' : fontFamily, 'font-weight': 700, 'font-size': fontSizeSmall, 'line-height': lineHeightSmall, 'color': '#AEC0D1', 'text-transform': 'uppercase', 'margin': '0px 0px 4px 0px','padding': '0px'}">{{ jobTitle }}</p>
-          <p v-if="office || mobile" :style="{'margin': '0px 0px 4px','padding': '0px', 'font-size': fontSizeSmall, 'line-height': lineHeightSmall}">
-            <span v-show="office">
-              <span :style="{'font-family' : fontFamily, 'font-weight': 700, 'font-size': fontSizeSmall, 'line-height': lineHeightSmall, 'color': colorPrimary}">P: </span>
-              <span :style="{'font-family' : fontFamily, 'font-weight': 500, 'font-size': fontSizeSmall, 'line-height': lineHeightSmall, 'color': colorPrimary}">{{ office }}</span>
-            </span>
-            <span v-if="office" width="10">&nbsp;</span>
-            <span v-show="mobile">
-              <span :style="{'font-family' : fontFamily, 'font-weight': 700, 'font-size': fontSizeSmall, 'line-height': lineHeightSmall, 'color': colorPrimary}">M: </span>
-              <span :style="{'font-family' : fontFamily, 'font-weight': 500, 'font-size': fontSizeSmall, 'line-height': lineHeightSmall, 'color': colorPrimary}">{{ mobile }}</span>
-            </span>
-          </p>
-          <p :style="{'margin': '0px','padding': '0px', 'font-size': fontSizeSmall, 'line-height': lineHeightSmall}">
-            <a :href="companyUrl" :style="{'font-family' : fontFamily, 'font-weight': 700, 'font-size': fontSizeSmall, 'line-height': lineHeightSmall, 'color': '#4393CF', 'text-decoration': 'none'}">{{ companyUrlReadable }}</a>
-          </p>
+          <table cellspacing="0" cellpadding="0" border="0">
+            <tr>
+              <td :style="nameStyle">{{ name }}</td>
+            </tr>
+            <tr v-if="jobTitle">
+              <td :style="jobTitleStyle">{{ jobTitle }}</td>
+            </tr>
+            <tr v-if="office || mobile">
+              <td :style="{'padding': '0px 0px 4px 0px', 'font-size': fontSizeSmall, 'line-height': lineHeightSmall}">
+                <table cellspacing="0" cellpadding="0" border="0">
+                  <tr>
+                    <td v-if="office" :style="{'padding': '0px 10px 0px 0px', 'font-family' : fontFamily, 'font-weight': 500, 'font-size': fontSizeSmall, 'line-height': lineHeightSmall, 'color': colorPrimary, 'whitespace': 'nowrap'}">
+                      <strong>P:</strong> {{ office }}
+                    </td>
+                    <td v-if="mobile" :style="{'padding': '0px', 'font-family' : fontFamily, 'font-weight': 500, 'font-size': fontSizeSmall, 'line-height': lineHeightSmall, 'color': colorPrimary, 'whitespace': 'nowrap'}">
+                      <strong>M:</strong> {{ mobile }}
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td :style="{'padding': '0px', 'font-size': fontSizeSmall, 'line-height': lineHeightSmall}">
+                <a :href="companyUrl" :style="{'font-family' : fontFamily, 'font-weight': 700, 'color': '#4393CF', 'text-decoration': 'none'}">{{ companyUrlReadable }}</a>
+              </td>
+            </tr>
+          </table>
         </td>
       </tr>
     </table>
@@ -37,16 +54,19 @@ export default {
   props: ['companies', 'form'],
   data() {
     return {
-      height: 64,
-      logoHeight: 62,
+      separatorHeight: 64,
       colorPrimary: '#002848',
       fontFamily: "Roboto, sans-serif",
       fontSizeSmall: '10px',
-      lineHeightSmall: '12px'
+      lineHeightSmall: '12px',
+      logoUrl: '',
+      logoWidth: 0,
+      logoHeight: 62
     }
   },
   mounted() {
     this.preloadCompanyLogos();
+    this.parseLogo(this.companyLogo)
   },
   methods: {
     preloadCompanyLogos() {
@@ -54,14 +74,54 @@ export default {
         let image = new Image();
         image.src = com.logo;
       });
+    },
+    parseLogo(url){
+      let image = new Image();
+      image.src = url;
+      image.onload = (e) => {
+        this.logoUrl = e.target.src
+        if (e.target.height > this.logoHeight) {
+          this.logoWidth = Math.round(e.target.width * ( this.logoHeight / e.target.height))
+        }
+
+        console.log(this.logoWidth)
+      }
+    }
+  },
+  watch : {
+    companyLogo(nv) {
+      this.parseLogo(nv)
     }
   },
   computed: {
+    nameStyle() {
+      return {
+        'font-family' : this.fontFamily, 
+        'font-weight': 700, 
+        'font-size': '16px', 
+        'line-height': '19px', 
+        'color': this.colorPrimary, 
+        'whitespace': 'nowrap', 
+        'padding': '0px 0px 4px 0px'
+      }
+    },
+    jobTitleStyle() {
+      return {
+        'font-family' : this.fontFamily, 
+        'font-weight': 700, 
+        'font-size': this.fontSizeSmall, 
+        'line-height': this.lineHeightSmall, 
+        'color': '#AEC0D1', 
+        'whitespace': 'nowrap', 
+        'padding': '0px 0px 4px 0px', 
+        'text-transform': 'uppercase'
+      }
+    },
     company() {
       if (this.form.company) {
         return this.companies.find((c) => c.name === this.form.company)
       }
-      return {name: '', url: ''};
+      return {name: '', url: '', logo: ''};
     },
     companyLogo() {
       return this.company.logo
@@ -89,7 +149,7 @@ export default {
     office() {
       let office = this.form.office.trim();
       if (office === '+') {
-        return '+1-888-888-888';
+        return '';
       }
 
       return office
@@ -97,7 +157,7 @@ export default {
     mobile() {
       let mobile = this.form.mobile.trim();
       if (mobile === '+') {
-        return '+1-888-888-888';
+        return '';
       }
 
       return mobile
@@ -105,3 +165,22 @@ export default {
   }
 }
 </script>
+
+<style>
+.preview,
+.preview.box{
+    padding: 20px;
+}
+.preview-buttons{
+    margin-top: 15px;
+    margin-left: 20px;
+}
+.preview-buttons button + button {
+    margin-left: 10px;
+}
+@media (max-width: 919px) {
+    .preview{
+        display: inline-block;
+    }
+}
+</style>
