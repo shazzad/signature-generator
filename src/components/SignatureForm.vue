@@ -149,8 +149,8 @@ export default {
       }
 
       var value = this.form.name.trim();
-      if ( ! value || value.split(' ').filter((part) => part).length < 2 ) {
-        return 'Please fill in your first and last name with a space in between.';
+      if ( ! value ) {
+        return 'Please fill in your name.';
       }
 
       return '';
@@ -205,10 +205,6 @@ export default {
     },
     formValid() {
       if ( ! this.form.name) {
-        return false;
-      }
-
-      if ( this.form.name.split(' ').filter((part) => part).length <= 1 ) {
         return false;
       }
 
