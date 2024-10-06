@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="icon" href="/favicon.png">
+	<title>Email Signature Generator</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+		rel="stylesheet">
+	<script type="text/javascript">
+		let baseUrl = 'http://signature-generator.github.com/';
+
+		window.esgConfig = {
+			"useCache": false,
+			"baseUrl": baseUrl,
+			"companies": [
+				{
+					"name": "W4dev",
+					"url": "https://w4dev.com",
+					"logo": baseUrl + "logo/W4dev.png"
+				},
+				{
+					"name": "Hudson Creative Studio",
+					"url": "https://hudsoncreativestudio.com",
+					"logo": baseUrl + "logo/Hudson-Creative-Studio-Color.svg"
+				}
+			]
+		};
+	</script>
+</head>
+
+<body>
+	<div id="app"></div>
+	<script type="module" src="/src/main.js"></script>
+</body>
+
+</html>

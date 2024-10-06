@@ -1,52 +1,61 @@
 <template>
   <div class="preview">
     <table cellspacing="0" cellpadding="0" border="0">
-      <tr>
-        <td :width="logoWidth" :style="{'vertical-align': 'middle'}">
-          <img :src="logoUrl" :width="logoWidth" :height="logoHeight" :style="{'display': 'block', 'image-rendering': '-webkit-optimize-contrast'}" />
-        </td>
-        <td width="49">
-          <table cellspacing="0" cellpadding="0" border="0" :style="{'margin':'1.5px 0px'}">
-            <tr>
-              <td width="24" :height="separatorHeight" :style="{'width': '24px'}">&nbsp;</td>
-              <td width="1" :height="separatorHeight" :style="{'border-left': '1px solid #d1dbe5'}"></td>
-              <td width="24" :height="separatorHeight" :style="{'width': '24px'}">&nbsp;</td>
-            </tr>
-          </table>
-        </td>
-        <td>
-          <table cellspacing="0" cellpadding="0" border="0">
-            <tr>
-              <td :style="nameStyle">{{ name }}</td>
-            </tr>
-            <tr v-if="jobTitle">
-              <td :style="jobTitleStyle">{{ jobTitle }}</td>
-            </tr>
-            <tr v-if="office || mobile">
-              <td :style="{'padding': '0px 0px 4px 0px', 'font-size': fontSizeSmall, 'line-height': lineHeightSmall}">
-                <table cellspacing="0" cellpadding="0" border="0">
-                  <tr>
-                    <td v-if="office" :style="{'padding': '0px 10px 0px 0px', 'font-family' : fontFamily, 'font-weight': 500, 'font-size': fontSizeSmall, 'line-height': lineHeightSmall, 'color': colorPrimary, 'whitespace': 'nowrap'}">
-                      <strong>P:</strong> {{ office }}
-                    </td>
-                    <td v-if="mobile" :style="{'padding': '0px', 'font-family' : fontFamily, 'font-weight': 500, 'font-size': fontSizeSmall, 'line-height': lineHeightSmall, 'color': colorPrimary, 'whitespace': 'nowrap'}">
-                      <strong>M:</strong> {{ mobile }}
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            <tr>
-              <td :style="{'padding': '0px', 'font-size': fontSizeSmall, 'line-height': lineHeightSmall}">
-                <a :href="companyUrl" :style="{'font-family' : fontFamily, 'font-weight': 700, 'color': '#4393CF', 'text-decoration': 'none'}">{{ companyUrlReadable }}</a>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
+      <tbody>
+        <tr>
+          <td :width="logoWidth" :style="{'vertical-align': 'middle'}">
+            <img :src="logoUrl" :width="logoWidth" :height="logoHeight" :style="{'display': 'block', 'image-rendering': '-webkit-optimize-contrast'}" />
+          </td>
+          <td width="49">
+            <table cellspacing="0" cellpadding="0" border="0" :style="{'margin':'1.5px 0px'}">
+              <tbody>
+                <tr>
+                  <td width="24" :height="separatorHeight" :style="{'width': '24px'}">&nbsp;</td>
+                  <td width="1" :height="separatorHeight" :style="{'border-left': '1px solid #d1dbe5'}"></td>
+                  <td width="24" :height="separatorHeight" :style="{'width': '24px'}">&nbsp;</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+          <td>
+            <table cellspacing="0" cellpadding="0" border="0">
+              <tbody>
+                <tr>
+                  <td :style="nameStyle">{{ name }}</td>
+                </tr>
+                <tr v-if="jobTitle">
+                  <td :style="jobTitleStyle">{{ jobTitle }}</td>
+                </tr>
+                <tr v-if="office || mobile">
+                  <td :style="{'padding': '0px 0px 4px 0px', 'font-size': fontSizeSmall, 'line-height': lineHeightSmall}">
+                    <table cellspacing="0" cellpadding="0" border="0">
+                      <tbody>
+                        <tr>
+                          <td v-if="office" :style="{'padding': '0px 10px 0px 0px', 'font-family' : fontFamily, 'font-weight': 500, 'font-size': fontSizeSmall, 'line-height': lineHeightSmall, 'color': colorPrimary, 'whitespace': 'nowrap'}">
+                            <strong>P:</strong> {{ office }}
+                          </td>
+                          <td v-if="mobile" :style="{'padding': '0px', 'font-family' : fontFamily, 'font-weight': 500, 'font-size': fontSizeSmall, 'line-height': lineHeightSmall, 'color': colorPrimary, 'whitespace': 'nowrap'}">
+                            <strong>M:</strong> {{ mobile }}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td :style="{'padding': '0px', 'font-size': fontSizeSmall, 'line-height': lineHeightSmall}">
+                    <a :href="companyUrl" :style="{'font-family' : fontFamily, 'font-weight': 700, 'color': '#4393CF', 'text-decoration': 'none'}">{{ companyUrlReadable }}</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </template>
+
 
 <script>
 export default {
@@ -83,8 +92,6 @@ export default {
         if (e.target.height > this.logoHeight) {
           this.logoWidth = Math.round(e.target.width * ( this.logoHeight / e.target.height))
         }
-
-        console.log(this.logoWidth)
       }
     }
   },

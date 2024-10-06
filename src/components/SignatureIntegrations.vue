@@ -22,8 +22,8 @@
     </ol>
   </div>
 </template>
-
 <script>
 export default {
   name: 'SignatureIntegrations'
 }
+</script>
